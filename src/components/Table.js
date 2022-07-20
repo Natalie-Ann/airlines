@@ -1,6 +1,23 @@
 import React from 'react';
 
-const Table = ( {rows, columns, format }) => {
+
+
+const Table = ( {previousPageHandler, nextPageHandler, currentPage, rows, columns, format }) => {
+
+  let groups = ((routes) => {
+    let routesCopy = routes.slice();
+    let groups = [];
+    while (routesCopy.length > 0) {
+      groups.push(routesCopy.splice(0, 25))
+    }
+    return groups
+  })(rows);
+
+  const calculateRowNumbers = (currentPage) => {
+    return `${1*currentPage}-${25*currentPage}`
+  }
+  
+
   return (
     <div>
       <table className="routes-table">
@@ -10,19 +27,24 @@ const Table = ( {rows, columns, format }) => {
           </tr>
         </thead>
         <tbody>
-          <TableData rows={rows} format={format}/>
+          <TableData rows={rows} format={format} groups={groups} currentPage={currentPage}/>
         </tbody>
-
       </table>
+      <div className="pagination">
+          <p>{`Showing ${calculateRowNumbers(currentPage)} of ${rows.length} total routes`}</p>
+          <p>
+            <button onClick={previousPageHandler}>Previous Page</button> <button onClick={nextPageHandler}>Next Page</button>
+          </p>
+        </div>
     </div>
   )
 }
 
-const TableData = ( { rows, format }) => {
+const TableData = ( { rows, format, groups, currentPage }) => {
 
     return (
     <>
-    {rows.map(row =>
+    {groups[currentPage - 1].map(row =>
     <tr key={`${row.airline}-${row.src}-${row.dest}`}>
       <td>{format('airline', row.airline)}</td>
       <td>{format('airport', row.src)}</td>

@@ -18,26 +18,22 @@ const formatValue = (property, value) => {
   }
 }
 
-let initialGroups = ((routes) => {
-  let routesCopy = routes.slice();
-  let groups = [];
-  while (routesCopy.length > 0) {
-    groups.push(routesCopy.splice(0, 25))
-  }
-  return groups
-})(routes);
+
 
 const App = () => {
-  const [selectedRoutes, setRoutes] = useState(routes);
+  const [selectedRoutes, setSelectedRoutes] = useState(routes);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentGroup, setCurrentGroup] = useState(initialGroups[0])
+  // const [currentGroup, setCurrentGroup] = useState(initialGroups[0])
+
 
   const previousPageHandler = (event) => {
     console.log('previous page')
+    setCurrentPage(currentPage - 1);
   }
   
   const nextPageHandler = (event) => {
     console.log('next page')
+    setCurrentPage(currentPage + 1);
   }
 
   return (
@@ -47,13 +43,7 @@ const App = () => {
     </header>
     <section>
       <img className="map" alt="world" src="equirectangular_world.jpg"></img>
-      <Table classname="routes-table" columns={columns} rows={currentGroup} format={formatValue} />
-      <div className="pagination">
-        <p>{`Showing ${selectedRoutes.length} total routes`}</p>
-        <p>
-          <button onClick={previousPageHandler}>Previous Page</button> <button onClick={nextPageHandler}>Next Page</button>
-        </p>
-    </div>
+      <Table classname="routes-table" columns={columns} rows={selectedRoutes} format={formatValue} currentPage={currentPage} previousPageHandler={previousPageHandler} nextPageHandler={nextPageHandler} />
     </section>
 
   </div>
