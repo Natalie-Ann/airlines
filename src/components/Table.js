@@ -1,19 +1,16 @@
 import React from 'react';
 
-const Table = ( {routesList, getAirlineById, getAirportByCode, columns }) => {
+const Table = ( {rows, getAirlineById, getAirportByCode, columns, format }) => {
   return (
     <div>
       <table className="routes-table">
         <thead>
           <tr>
-            {/* {columns.map(column => <th>{column.name}</th>)} */}
-            <th>Airline</th>
-            <th>Source Airport</th>
-            <th>Destination Airport</th>
+            {columns.map(column => <th key={column.property}>{column.name}</th>)}
           </tr>
         </thead>
         <tbody>
-          <TableData routesList={routesList} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
+          <TableData rows={rows} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode} format={format}/>
         </tbody>
 
       </table>
@@ -21,18 +18,19 @@ const Table = ( {routesList, getAirlineById, getAirportByCode, columns }) => {
   )
 }
 
-const TableData = ( { routesList, getAirlineById, getAirportByCode }) => {
+const TableData = ( { rows, getAirlineById, getAirportByCode, format }) => {
 
-  return (
+    return (
     <>
-    {routesList.map(route =>
-    <tr key={route.id}>
-      <td>{getAirlineById(route.airline)}</td>
-      <td>{getAirportByCode(route.src)}</td>
-      <td>{getAirportByCode(route.dest)}</td>
+    {rows.map(row =>
+    <tr key={row.id}>
+      <td>{format('airline', row.airline)}</td>
+      <td>{format('airport', row.src)}</td>
+      <td>{format('airport', row.dest)}</td>
       </tr>)}
     </>
   )
+
 
 }
 

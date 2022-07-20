@@ -7,14 +7,24 @@ import Table from './components/Table'
 const getAirlineById = data.getAirlineById;
 const getAirportByCode = data.getAirportByCode;
 
+const columns = [
+  {name: 'Airline', property: 'airline'},
+  {name: 'Source Airport', property: 'src'},
+  {name: 'Destination Airport', property: 'dest'},
+];
+
+const formatValue = (property, value) => {
+  if (property === 'airline') {
+    return getAirlineById(value);
+  } else {
+    return getAirportByCode(value)
+  }
+
+
+}
+
 const App = () => {
   const [routes, setRoutes] = useState(data.routes);
-
-  const columns = [
-    {name: 'Airline', property: 'airline'},
-    {name: 'Source Airport', property: 'src'},
-    {name: 'Destination Airport', property: 'dest'},
-  ];
 
   return (
   <div className="app">
@@ -23,7 +33,7 @@ const App = () => {
     </header>
     <section>
       <img className="map" alt="world" src="equirectangular_world.jpg"></img>
-      <Table classname="routes-table" columns={columns} routesList={routes} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
+      <Table classname="routes-table" columns={columns} rows={routes} format={formatValue} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode} />
     </section>
   </div>
 )
