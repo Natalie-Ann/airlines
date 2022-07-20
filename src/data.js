@@ -1406,4 +1406,4 @@ const airports = [
 
 ];
 
-export default {routes, airlines, airports, getAirlineById, getAirportByCode};
+export {routes, airlines, airports, getAirlineById, getAirportByCode};

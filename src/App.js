@@ -1,11 +1,8 @@
 import React from 'react';
 import { useEffect, useState } from 'react'
 import './App.css';
-import data from './data'
 import Table from './components/Table'
-
-const getAirlineById = data.getAirlineById;
-const getAirportByCode = data.getAirportByCode;
+import { getAirlineById, getAirportByCode, airlines, routes, airports } from './data'
 
 const columns = [
   {name: 'Airline', property: 'airline'},
@@ -19,12 +16,29 @@ const formatValue = (property, value) => {
   } else {
     return getAirportByCode(value)
   }
-
-
 }
 
+let initialGroups = ((routes) => {
+  let routesCopy = routes.slice();
+  let groups = [];
+  while (routesCopy.length > 0) {
+    groups.push(routesCopy.splice(0, 25))
+  }
+  return groups
+})(routes);
+
 const App = () => {
-  const [routes, setRoutes] = useState(data.routes);
+  const [selectedRoutes, setRoutes] = useState(routes);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentGroup, setCurrentGroup] = useState(initialGroups[0])
+
+  const previousPageHandler = (event) => {
+    console.log('previous page')
+  }
+  
+  const nextPageHandler = (event) => {
+    console.log('next page')
+  }
 
   return (
   <div className="app">
@@ -33,8 +47,15 @@ const App = () => {
     </header>
     <section>
       <img className="map" alt="world" src="equirectangular_world.jpg"></img>
-      <Table classname="routes-table" columns={columns} rows={routes} format={formatValue} />
+      <Table classname="routes-table" columns={columns} rows={currentGroup} format={formatValue} />
+      <div className="pagination">
+        <p>{`Showing ${selectedRoutes.length} total routes`}</p>
+        <p>
+          <button onClick={previousPageHandler}>Previous Page</button> <button onClick={nextPageHandler}>Next Page</button>
+        </p>
+    </div>
     </section>
+
   </div>
 )
 }
