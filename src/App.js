@@ -33,7 +33,7 @@ const App = () => {
     </header>
     <section>
       <img className="map" alt="world" src="equirectangular_world.jpg"></img>
-      <Table classname="routes-table" columns={columns} rows={routes} format={formatValue} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode} />
+      <Table classname="routes-table" columns={columns} rows={routes} format={formatValue} />
     </section>
   </div>
 )

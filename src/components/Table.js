@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Table = ( {rows, getAirlineById, getAirportByCode, columns, format }) => {
+const Table = ( {rows, columns, format }) => {
   return (
     <div>
       <table className="routes-table">
@@ -10,7 +10,7 @@ const Table = ( {rows, getAirlineById, getAirportByCode, columns, format }) => {
           </tr>
         </thead>
         <tbody>
-          <TableData rows={rows} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode} format={format}/>
+          <TableData rows={rows} format={format}/>
         </tbody>
 
       </table>
@@ -18,12 +18,12 @@ const Table = ( {rows, getAirlineById, getAirportByCode, columns, format }) => {
   )
 }
 
-const TableData = ( { rows, getAirlineById, getAirportByCode, format }) => {
+const TableData = ( { rows, format }) => {
 
     return (
     <>
     {rows.map(row =>
-    <tr key={row.id}>
+    <tr key={`${row.airline}-${row.src}-${row.dest}`}>
       <td>{format('airline', row.airline)}</td>
       <td>{format('airport', row.src)}</td>
       <td>{format('airport', row.dest)}</td>
