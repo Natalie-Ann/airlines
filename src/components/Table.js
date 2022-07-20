@@ -1,20 +1,18 @@
 import React from 'react';
 
-
-
-const Table = ( {previousPageHandler, nextPageHandler, currentPage, rows, columns, format }) => {
+const Table = ( {previousPageHandler, nextPageHandler, currentPage, rows, columns, format, perPage = 25 }) => {
 
   let groups = ((routes) => {
     let routesCopy = routes.slice();
     let groups = [];
     while (routesCopy.length > 0) {
-      groups.push(routesCopy.splice(0, 25))
+      groups.push(routesCopy.splice(0, perPage))
     }
     return groups
   })(rows);
 
   const calculateRowNumbers = (currentPage) => {
-    return `${1*currentPage}-${25*currentPage}`
+    return `${1*currentPage}-${perPage*currentPage}`
   }
   
 
