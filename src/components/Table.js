@@ -12,10 +12,19 @@ const Table = ( {previousPageHandler, nextPageHandler, currentPage, rows, column
   })(rows);
 
   const calculateRowNumbers = (currentPage) => {
-    return `${1*currentPage}-${perPage*currentPage}`
+    let end = perPage * currentPage;
+    let start = end - 24;
+    return `${start}-${end}`
+  }
+
+  const toggleNextPageDisabled = () => {
+    return currentPage === groups.length;
+  }
+
+  const togglePrevPageDisabled = () => {
+    return currentPage === 1;
   }
   
-
   return (
     <div>
       <table className="routes-table">
@@ -31,7 +40,7 @@ const Table = ( {previousPageHandler, nextPageHandler, currentPage, rows, column
       <div className="pagination">
           <p>{`Showing ${calculateRowNumbers(currentPage)} of ${rows.length} total routes`}</p>
           <p>
-            <button onClick={previousPageHandler}>Previous Page</button> <button onClick={nextPageHandler}>Next Page</button>
+            <button disabled={togglePrevPageDisabled()} onClick={previousPageHandler}>Previous Page</button> <button disabled={toggleNextPageDisabled()} onClick={nextPageHandler}>Next Page</button>
           </p>
         </div>
     </div>
