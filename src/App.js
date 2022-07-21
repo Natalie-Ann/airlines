@@ -35,6 +35,10 @@ const App = () => {
 
   const handleOnSelectAirline = (event) => {
     let selectedAirline = event.target.value;
+    if (selectedAirline === 'all') {
+      setSelectedRoutes(routes);
+      return;
+    }
     let airlineCode = airlines.find(airline => airline.name === selectedAirline).id;
     let filteredRoutes = routes.filter(route => route.airline === airlineCode);
     setSelectedRoutes(filteredRoutes)
