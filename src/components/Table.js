@@ -1,6 +1,19 @@
 import React from 'react';
+import { useState } from 'react';
 
-const Table = ( {previousPageHandler, nextPageHandler, currentPage, rows, columns, format, perPage = 25 }) => {
+const Table = ( { rows, columns, format, perPage = 25 }) => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const previousPageHandler = (event) => {
+    console.log('previous page')
+    setCurrentPage(currentPage - 1);
+  }
+  
+  const nextPageHandler = (event) => {
+    console.log('next page')
+    setCurrentPage(currentPage + 1);
+  }
 
   let groups = ((routes) => {
     let routesCopy = routes.slice();

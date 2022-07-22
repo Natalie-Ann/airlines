@@ -21,17 +21,6 @@ const formatValue = (property, value) => {
 
 const App = () => {
   const [selectedRoutes, setSelectedRoutes] = useState(routes);
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const previousPageHandler = (event) => {
-    console.log('previous page')
-    setCurrentPage(currentPage - 1);
-  }
-  
-  const nextPageHandler = (event) => {
-    console.log('next page')
-    setCurrentPage(currentPage + 1);
-  }
 
   const handleOnSelectAirline = (event) => {
     let selectedAirline = event.target.value;
@@ -52,7 +41,8 @@ const App = () => {
     <section>
       <img className="map" alt="world" src="equirectangular_world.jpg"></img>
       <Select airlines={airlines} handleOnSelectAirline={handleOnSelectAirline} />
-      <Table classname="routes-table" columns={columns} rows={selectedRoutes} format={formatValue} currentPage={currentPage} previousPageHandler={previousPageHandler} nextPageHandler={nextPageHandler} />
+      {/* <Select options={filteredAirlines} valueKey="id" titleKey="name" allTitle="All Airlines" value={selectedAirline} onSelect={handleOnSelectAirline} /> */}
+      <Table classname="routes-table" columns={columns} rows={selectedRoutes} format={formatValue} />
     </section>
 
   </div>
