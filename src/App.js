@@ -7,6 +7,7 @@ import Select from './components/Select'
 
 const App = () => {
   const [selectedAirlineNumber, setSelectedAirline] = useState('All Airlines');
+  const [selectedAirport, setSelectedAirport] = useState('All Airports')
 
   const columns = [
     {name: 'Airline', property: 'airline'},
@@ -23,6 +24,7 @@ const App = () => {
   }
 
   let filteredAirlines = airlines;
+  let filteredAirports = airports;
 
   const handleOnSelectAirline = (event) => {
     console.log(event.target.value)
@@ -34,8 +36,18 @@ const App = () => {
     }
   }
 
+  const handleOnSelectAirport = (event) => {
+    console.log(typeof event.target.value)
+
+    if (event.target.value === 'All Airports') {
+      setSelectedAirport('All Airports')
+    } else {
+      setSelectedAirport(event.target.value)
+    }
+  }
+
   let filteredRoutes = routes.filter(route => {
-    return route.airline === selectedAirlineNumber
+    return (route.airline === selectedAirlineNumber || route.src === selectedAirport || route.dest === selectedAirport)
   });
 
   return (
@@ -48,7 +60,7 @@ const App = () => {
       {/* <Select airlines={airlines} handleOnSelectAirline={handleOnSelectAirline} /> */}
       <div>
       <label htmlFor="airline-select">Show routes on</label><Select id="airline-select" options={filteredAirlines} valueKey="id" titleKey="name" allTitle="All Airlines" value={selectedAirlineNumber} onSelect={handleOnSelectAirline} />
-      {/* <label htmlFor="airport-select">flying in or out of</label><Select id="airport-select" options={filteredAirports} valueKey="code" titleKey="name" allTitle="All Airports" value="" onSelect={handleOnSelectAirport}/> */}
+      <label htmlFor="airport-select">flying in or out of</label><Select id="airport-select" options={filteredAirports} valueKey="code" titleKey="name" allTitle="All Airports" value={selectedAirport} onSelect={handleOnSelectAirport}/>
       </div>
       <Table classname="routes-table" columns={columns} rows={filteredRoutes.length > 0? filteredRoutes : routes} format={formatValue} />
     </section>
