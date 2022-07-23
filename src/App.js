@@ -47,8 +47,16 @@ const App = () => {
   }
 
   let filteredRoutes = routes.filter(route => {
+    // if (selectedAirlineNumber === 'All Airlines') {
+    //   return route.src === selectedAirport || route.dest === selectedAirport
+    // } else if 
     return (route.airline === selectedAirlineNumber || route.src === selectedAirport || route.dest === selectedAirport)
   });
+
+  const clearFilters = () => {
+    setSelectedAirline('All Airlines')
+    setSelectedAirport('All Airports')
+  }
 
   return (
   <div className="app">
@@ -62,6 +70,7 @@ const App = () => {
       <label htmlFor="airline-select">Show routes on</label><Select id="airline-select" options={filteredAirlines} valueKey="id" titleKey="name" allTitle="All Airlines" value={selectedAirlineNumber} onSelect={handleOnSelectAirline} />
       <label htmlFor="airport-select">flying in or out of</label><Select id="airport-select" options={filteredAirports} valueKey="code" titleKey="name" allTitle="All Airports" value={selectedAirport} onSelect={handleOnSelectAirport}/>
       </div>
+      <button onClick={clearFilters}>Clear filters</button>
       <Table classname="routes-table" columns={columns} rows={filteredRoutes.length > 0? filteredRoutes : routes} format={formatValue} />
     </section>
 
