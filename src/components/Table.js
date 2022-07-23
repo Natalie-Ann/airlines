@@ -60,17 +60,18 @@ const Table = ( { rows, columns, format, perPage = 25 }) => {
   )
 }
 
-const TableData = ( { rows, format, groups, currentPage }) => {
+const TableData = ( { format, groups, currentPage }) => {
 
     return (
-    <>
-    {groups[currentPage - 1].map(row =>
-    <tr key={`${row.airline}-${row.src}-${row.dest}`}>
-      <td>{format('airline', row.airline)}</td>
-      <td>{format('airport', row.src)}</td>
-      <td>{format('airport', row.dest)}</td>
-      </tr>)}
-    </>
+      <>
+            {groups[currentPage - 1].map(row =>
+        <tr key={`${row.airline}-${row.src}-${row.dest}`}>
+          <td>{format('airline', row.airline)}</td>
+          <td>{format('airport', row.src)}</td>
+          <td>{format('airport', row.dest)}</td>
+        </tr>)}
+      </>
+
   )
 
 
