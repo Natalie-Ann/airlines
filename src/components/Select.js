@@ -23,12 +23,14 @@ const Select = ({ id, options, valueKey, titleKey, allTitle, value, onSelect }) 
     onSelect(event)
   }
 
+  //set disabled attribute for airports/airlines that will result in empty array
+
   return (
       <select id={id} value={value} onChange={handleSelect}>
         <option key={allTitle} value={allTitle}>{allTitle}</option>
         {options.map(selectOption => {
           return (
-            <option value={selectOption[valueKey]} key={selectOption[valueKey]}>{selectOption[titleKey]}</option>
+            <option disabled={selectOption.disabled} value={selectOption[valueKey]} key={selectOption[valueKey]}>{selectOption[titleKey]}</option>
           )
           })
       }

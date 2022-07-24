@@ -23,8 +23,25 @@ const App = () => {
     }
   }
 
-  let filteredAirlines = airlines;
-  let filteredAirports = airports;
+  let filteredAirlines = airlines.map(airline => {
+    if (selectedAirlineNumber === 'All Airlines') {
+      airline.disabled = false;
+    } else if (airline.id !== selectedAirlineNumber) {
+      airline.disabled = true;
+    }
+
+    return airline
+  });
+
+  let filteredAirports = airports.map(airport => {
+    if (selectedAirport === 'All Airports') {
+      airport.disabled = false;
+    } else if (airport.code !== selectedAirport) {
+      airport.disabled = true;
+    }
+
+    return airport
+  });
 
   const handleOnSelectAirline = (event) => {
     console.log(event.target.value)
@@ -37,7 +54,7 @@ const App = () => {
   }
 
   const handleOnSelectAirport = (event) => {
-    console.log(typeof event.target.value)
+    console.log(event.target.value)
 
     if (event.target.value === 'All Airports') {
       setSelectedAirport('All Airports')
@@ -69,7 +86,6 @@ const App = () => {
     </header>
     <section>
       <img className="map" alt="world" src="equirectangular_world.jpg"></img>
-      {/* <Select airlines={airlines} handleOnSelectAirline={handleOnSelectAirline} /> */}
       <div>
       <label htmlFor="airline-select">Show routes on</label><Select id="airline-select" options={filteredAirlines} valueKey="id" titleKey="name" allTitle="All Airlines" value={selectedAirlineNumber} onSelect={handleOnSelectAirline} />
       <label htmlFor="airport-select">flying in or out of</label><Select id="airport-select" options={filteredAirports} valueKey="code" titleKey="name" allTitle="All Airports" value={selectedAirport} onSelect={handleOnSelectAirport}/>
