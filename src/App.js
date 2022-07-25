@@ -4,6 +4,7 @@ import './App.css';
 import Table from './components/Table'
 import { getAirlineById, getAirportByCode, airlines, routes, airports } from './data'
 import Select from './components/Select'
+import Map from './components/Map';
 
 const App = () => {
   const [selectedAirlineNumber, setSelectedAirline] = useState('All Airlines');
@@ -78,13 +79,15 @@ const App = () => {
     setSelectedAirport('All Airports')
   }
 
+  console.log(filteredRoutes);
+
   return (
   <div className="app">
     <header className="header">
     <h1 className="title">Airline Routes</h1>
     </header>
     <section>
-      <img className="map" alt="world" src="equirectangular_world.jpg"></img>
+      <Map filteredRoutes={filteredRoutes} filteredAirports={filteredAirports}/>
       <div>
       <label htmlFor="airline-select">Show routes on</label><Select id="airline-select" options={filteredAirlines} valueKey="id" titleKey="name" allTitle="All Airlines" value={selectedAirlineNumber} onSelect={handleOnSelectAirline} />
       <label htmlFor="airport-select">flying in or out of</label><Select id="airport-select" options={filteredAirports} valueKey="code" titleKey="name" allTitle="All Airports" value={selectedAirport} onSelect={handleOnSelectAirport}/>
