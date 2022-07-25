@@ -9,7 +9,7 @@ const Map = ( { filteredRoutes, filteredAirports } ) => {
         //get airport coordinates for source and destination
         let sourceAirport = filteredAirports.find(airport => airport.code === route.src);
         let sourceLat = sourceAirport.lat;
-        let sourceLong = sourceAirport.lat;
+        let sourceLong = sourceAirport.long;
 
         let destAirport = filteredAirports.find(airport => airport.code === route.dest)
         let destLat = destAirport.lat;
@@ -17,13 +17,13 @@ const Map = ( { filteredRoutes, filteredAirports } ) => {
 
         return (
           <g key={route.airline + route.src + route.dest}>
-          <circle className="source" cx={sourceLat} cy={sourceLong}>
-            <title></title>
+          <circle className="source" cx={sourceLong} cy={sourceLat}>
+            <title>{sourceAirport.name}</title>
           </circle> 
-          <circle className="destination" cx={destLat} cy={destLong}>
-            <title></title>
+          <circle className="destination" cx={destLong} cy={destLat}>
+            <title>{destAirport.name}</title>
           </circle>
-          <path d={`M${sourceLat} ${sourceLong} L ${destLat} ${destLong}`} />
+          <path d={`M${sourceLong} ${sourceLat} L ${destLong} ${destLat}`} />
         </g>
         )
     })}
