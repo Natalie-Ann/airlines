@@ -23,23 +23,33 @@ const App = () => {
     }
   }
 
-  let filteredAirlines = airlines.map(airline => {
-    if (selectedAirlineNumber === 'All Airlines') {
-      airline.disabled = false;
-    } else if (airline.id !== selectedAirlineNumber) {
-      airline.disabled = true;
+  let filteredRoutes = routes.filter(route => {
+    if (selectedAirlineNumber !== 'All Airlines' && selectedAirport !== 'All Airports') {
+      return ((route.src === selectedAirport || route.dest === selectedAirport) && route.airline === selectedAirlineNumber)
+    } else if (selectedAirlineNumber === 'All Airlines' && selectedAirport !== 'All Airports') {
+      return route.src === selectedAirport || route.dest === selectedAirport
+    } else if (selectedAirlineNumber !== 'All Airlines' && selectedAirport === 'All Airports') {
+      return route.airline === selectedAirlineNumber
     }
+    return route;
+  });
 
+  let filteredAirlines = airlines.map(airline => {
+    if (selectedAirlineNumber === 'All Airlines' && selectedAirport === 'All Airports') {
+      airline.disabled = false;
+      //or if airline is not included in filteredRoutes
+    } else if (!filteredRoutes.map(route => route.airline).includes(airline.id)) {
+      airline.disabled = true;
+    } 
     return airline
   });
 
   let filteredAirports = airports.map(airport => {
-    if (selectedAirport === 'All Airports') {
+    if (selectedAirport === 'All Airports' && selectedAirlineNumber === 'All Airlines') {
       airport.disabled = false;
-    } else if (airport.code !== selectedAirport) {
+    } else if (!filteredRoutes.map(route => route.src).includes(airport.code) && !filteredRoutes.map(route => route.dest).includes(airport.code)) {
       airport.disabled = true;
     }
-
     return airport
   });
 
@@ -62,17 +72,6 @@ const App = () => {
       setSelectedAirport(event.target.value)
     }
   }
-
-  let filteredRoutes = routes.filter(route => {
-    if (selectedAirlineNumber !== 'All Airlines' && selectedAirport !== 'All Airports') {
-      return ((route.src === selectedAirport || route.dest === selectedAirport) && route.airline === selectedAirlineNumber)
-    } else if (selectedAirlineNumber === 'All Airlines' && selectedAirport !== 'All Airports') {
-      return route.src === selectedAirport || route.dest === selectedAirport
-    } else if (selectedAirlineNumber !== 'All Airlines' && selectedAirport === 'All Airports') {
-      return route.airline === selectedAirlineNumber
-    }
-    return route;
-  });
 
   const clearFilters = () => {
     setSelectedAirline('All Airlines')
