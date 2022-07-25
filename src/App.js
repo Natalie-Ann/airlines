@@ -91,8 +91,8 @@ const App = () => {
       <div>
       <label htmlFor="airline-select">Show routes on</label><Select id="airline-select" options={filteredAirlines} valueKey="id" titleKey="name" allTitle="All Airlines" value={selectedAirlineNumber} onSelect={handleOnSelectAirline} />
       <label htmlFor="airport-select">flying in or out of</label><Select id="airport-select" options={filteredAirports} valueKey="code" titleKey="name" allTitle="All Airports" value={selectedAirport} onSelect={handleOnSelectAirport}/>
+      <button onClick={clearFilters}>Clear Filters</button>
       </div>
-      <button onClick={clearFilters}>Clear filters</button>
       <Table classname="routes-table" columns={columns} rows={filteredRoutes} format={formatValue} />
     </section>
 
